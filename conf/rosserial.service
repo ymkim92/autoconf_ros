@@ -1,0 +1,16 @@
+[Unit]
+Description=ROS node for communication between Gumstix and Arduino
+After=network.target
+
+[Service]
+Type=forking
+# The PID file is optional, but recommended in the manpage
+# "so that systemd can identify the main process of the daemon"
+PIDFile=/var/run/rosserial.pid
+EnvironmentFile=/etc/default/roscore
+ExecStartPre=/bin/touch /usr/.catkin
+ExecStart=/usr/bin/rosrun rosserial_python serial_node.py _port:=/dev/ttyO0 _baud:=57600
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

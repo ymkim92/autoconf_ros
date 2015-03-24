@@ -1,0 +1,3 @@
+ROS_ROOT=/usr
+ROS_MASTER_URI=http://ymkim-SD550:11311
+MAKE_PREFIX_PATH=/usr
