@@ -56,6 +56,25 @@ def set_overo_mlan():
     run("systemctl enable udhcpc@mlan0")
     run("systemctl enable wpa_supplicant@mlan0")
 
+def install_base_rpms():
+    rpm_path_name = '/home/ymkim/devel/yoc/build/tmp/deploy/rpm/armv7a_vfp_neon/'
+    rpm_file_names = [
+        'rosserial-msgs-0.5.5-r0.armv7a_vfp_neon.rpm',
+        'diagnostic-msgs-1.10.6-r0.armv7a_vfp_neon.rpm',
+        'rosserial-python-0.5.5-r0.armv7a_vfp_neon.rpm',
+        'python-pyserial-2.4-ml4.armv7a_vfp_neon.rpm',
+        'geometry-msgs-1.10.6-r0.armv7a_vfp_neon.rpm',
+        'main-control-1.0.0-r0.armv7a_vfp_neon.rpm']
+    for file_name in rpm_file_names:
+        call(['scp', "%s%s" %(rpm_path_name, file_name), 'root@overo:/tmp/']) 
+        run("rpm -ivh /tmp/%s" %file_name)
+
+def install_main_control():
+    rpm_file_name = '/home/ymkim/devel/yoc/build/tmp/deploy/rpm/armv7a_vfp_neon/main-control-1.0.0-r0.armv7a_vfp_neon.rpm'
+    call(['scp', rpm_file_name, 'root@overo:~']) 
+    run("rpm -ivh --replacepkgs /home/root/main-control-1.0.0-r0.armv7a_vfp_neon.rpm")
+    #run("rpm -ivh main-control-1.0.0-r0.armv7a_vfp_neon.rpm")
+
 def generate_roscore(roscore_hostname, file_name):
     #/etc/default/roscore
     with open(file_name, 'w') as outfile:
