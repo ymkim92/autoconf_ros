@@ -19,8 +19,7 @@ def set_hosts():
     # after devel and overo 
 
     my_hostname = socket.gethostname()
-    my_ipaddress = socket.gethostbyname(socket.gethostname())
-    change_etc_hosts(my_ipaddress, my_hostname)
+    change_etc_hosts(env.my_ipaddress, my_hostname)
     change_etc_hosts(env.overo_ipaddress, 'overo')
 
 def cp_overo_roscore():
@@ -52,7 +51,7 @@ def set_overo_mlan():
 
     # /lib/systemd/system/udhcpc\@.service
     udhcpc_file_name = '/lib/systemd/system/udhcpc\@.service'
-    run("/bin/sed -i.bak 's/IFACE/mlan0/' %s" %udhcpc_file_name)
+    run("/bin/sed -i.bak 's/wlan0/mlan0/' %s" %udhcpc_file_name)
     run("systemctl enable udhcpc@mlan0")
     run("systemctl enable wpa_supplicant@mlan0")
 
