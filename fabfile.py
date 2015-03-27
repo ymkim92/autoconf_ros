@@ -57,6 +57,8 @@ def set_overo_mlan():
     run("systemctl enable wpa_supplicant@mlan0")
 
 def install_base_rpms():
+    #after overo
+
     rpm_path_name = '/home/ymkim/devel/yoc/build/tmp/deploy/rpm/armv7a_vfp_neon/'
     rpm_file_names = [
         'rosserial-msgs-0.5.5-r0.armv7a_vfp_neon.rpm',
@@ -64,6 +66,8 @@ def install_base_rpms():
         'rosserial-python-0.5.5-r0.armv7a_vfp_neon.rpm',
         'python-pyserial-2.4-ml4.armv7a_vfp_neon.rpm',
         'geometry-msgs-1.10.6-r0.armv7a_vfp_neon.rpm',
+        # http://www.jumpnowtek.com/gumstix-linux/Duovero-Access-Point.html
+        'hostap-daemon-1.0-r0.armv7a_vfp_neon.rpm',
         'main-control-1.0.0-r0.armv7a_vfp_neon.rpm']
     for file_name in rpm_file_names:
         call(['scp', "%s%s" %(rpm_path_name, file_name), 'root@overo:/tmp/']) 
