@@ -44,6 +44,10 @@ def set_overo_rosserial():
     call(['scp', mlan_file_name, 'root@overo:/etc/systemd/system']) 
     run("systemctl enable rosserial.service")
 
+# This is for Kernel 3.5 or 3.6. 
+# In 3.17 version, the device name is changed to wlan0
+# and it is simple to activate wlan0 editing only
+# /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 def set_overo_mlan():
     # after overo
     
@@ -66,9 +70,8 @@ def install_base_rpms():
         'rosserial-python-0.5.5-r0.armv7a_vfp_neon.rpm',
         'python-pyserial-2.4-ml4.armv7a_vfp_neon.rpm',
         'geometry-msgs-1.10.6-r0.armv7a_vfp_neon.rpm',
-        # http://www.jumpnowtek.com/gumstix-linux/Duovero-Access-Point.html
-        'hostap-daemon-1.0-r0.armv7a_vfp_neon.rpm',
-        'main-control-1.0.0-r0.armv7a_vfp_neon.rpm']
+        'main-control-1.0.0-r0.armv7a_vfp_neon.rpm',
+    ]
     for file_name in rpm_file_names:
         call(['scp', "%s%s" %(rpm_path_name, file_name), 'root@overo:/tmp/']) 
         run("rpm -ivh /tmp/%s" %file_name)
