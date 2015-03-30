@@ -7,6 +7,7 @@ with your correct information.
 
 ::
 
+    $ fab -c fab.conf overo install_base_rpms
     $ fab -c fab.conf devel set_hosts
     $ fab -c fab.conf overo set_hosts
     $ fab -c fab.conf devel cp_overo_roscore

@@ -30,12 +30,6 @@ def cp_overo_roscore():
     generate_roscore(my_hostname, roscore_file_name)
     call(['scp', roscore_file_name, 'root@overo:/etc/default/roscore']) 
 
-def fix_rosserial_path():
-    # after overo
-
-    # TODO: I couldn't understand why this has to be done
-    run("ln -s /usr/lib/rosserial_python/serial_node.py /usr/share/rosserial_python/serial_node.py")
-
 def set_overo_rosserial():
     # after overo
 
@@ -59,27 +53,37 @@ def set_overo_mlan():
     run("systemctl enable udhcpc@mlan0")
     run("systemctl enable wpa_supplicant@mlan0")
 
+#rpm_path_name = '/home/ymkim/devel/yoc1/build/tmp/deploy/rpm/armv7a_vfp_neon/'
+rpm_path_name = '/home/ymkim/devel/yoc1/build/tmp/deploy/rpm/cortexa8hf_vfp_neon/'
+post_name = '.cortexa8hf_vfp_neon.rpm'
+
 def install_base_rpms():
     #after overo
+    '''
+    $ cp -a ros-ublox ~/devel/yoc1/poky/meta-ros/recipes-ros
+    $ cd ~/devel/yoc1/poky/meta-ros/recipes-ros
+    $ ln -s ~/devel/yocto/tyltrotor tyltrotor
+    bitbake packagegroup-ros-comm sensor-msgs
+    bitbake diagnostic-msgs
+    bitbake rosserial-msgs 
+    bitbake screen
+    bitbake python-pyserial ublox-gps main-control
+    '''
 
-    rpm_path_name = '/home/ymkim/devel/yoc/build/tmp/deploy/rpm/armv7a_vfp_neon/'
     rpm_file_names = [
-        'rosserial-msgs-0.5.5-r0.armv7a_vfp_neon.rpm',
-        'diagnostic-msgs-1.10.6-r0.armv7a_vfp_neon.rpm',
-        'rosserial-python-0.5.5-r0.armv7a_vfp_neon.rpm',
-        'python-pyserial-2.4-ml4.armv7a_vfp_neon.rpm',
-        'geometry-msgs-1.10.6-r0.armv7a_vfp_neon.rpm',
-        'main-control-1.0.0-r0.armv7a_vfp_neon.rpm',
+        'main-control-1.0.0-r0.0',
     ]
     for file_name in rpm_file_names:
-        call(['scp', "%s%s" %(rpm_path_name, file_name), 'root@overo:/tmp/']) 
-        run("rpm -ivh /tmp/%s" %file_name)
+        call(['scp', "%s%s%s" %(rpm_path_name, file_name, post_name), 'root@overo:/tmp/']) 
+        run("rpm -ivh /tmp/%s%s" %(file_name, post_name))
 
 def install_main_control():
-    rpm_file_name = '/home/ymkim/devel/yoc/build/tmp/deploy/rpm/armv7a_vfp_neon/main-control-1.0.0-r0.armv7a_vfp_neon.rpm'
+    rpm_file_name = '%smain-control-1.0.0-r0.armv7a_vfp_neon.rpm' %rpm_path_name
     call(['scp', rpm_file_name, 'root@overo:~']) 
     run("rpm -ivh --replacepkgs /home/root/main-control-1.0.0-r0.armv7a_vfp_neon.rpm")
     #run("rpm -ivh main-control-1.0.0-r0.armv7a_vfp_neon.rpm")
+
+#--------------------------------------------------------------------------------------
 
 def generate_roscore(roscore_hostname, file_name):
     #/etc/default/roscore
