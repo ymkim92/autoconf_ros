@@ -10,7 +10,7 @@ PIDFile=/var/run/rosserial.pid
 EnvironmentFile=/etc/default/roscore
 ExecStartPre=/bin/touch /usr/.catkin
 ExecStart=/usr/bin/rosrun rosserial_python serial_node.py _port:=/dev/ttyO0 _baud:=57600
-Restart=on-abort
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
