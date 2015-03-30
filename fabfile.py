@@ -26,9 +26,11 @@ def cp_overo_roscore():
     # after devel
 
     roscore_file_name = 'conf/roscore'
-    my_hostname = socket.gethostname()
-    generate_roscore(my_hostname, roscore_file_name)
-    call(['scp', roscore_file_name, 'root@overo:/etc/default/roscore']) 
+    #call(['scp', roscore_file_name, 'root@overo:/etc/default/roscore']) 
+    #call(['scp', 'conf/ros_init.rc', 'root@overo:~']) 
+    #call(['scp', 'conf/run_serial.sh', 'root@overo:~']) 
+    call(['scp', 'conf/ublox_gps.launch',
+          'root@overo:/opt/ros/hydro/lib/ublox_gps']) 
 
 def set_overo_rosserial():
     # after overo
@@ -78,7 +80,7 @@ def install_base_rpms():
         run("rpm -ivh /tmp/%s%s" %(file_name, post_name))
 
 def install_main_control():
-    rpm_file_name = '%smain-control-1.0.0-r0.armv7a_vfp_neon.rpm' %rpm_path_name
+    rpm_file_name = '%smain-control-1.0.0-r0.0.cortexa8hf_vfp_neon.rpm' %rpm_path_name
     call(['scp', rpm_file_name, 'root@overo:~']) 
     run("rpm -ivh --replacepkgs /home/root/main-control-1.0.0-r0.armv7a_vfp_neon.rpm")
     #run("rpm -ivh main-control-1.0.0-r0.armv7a_vfp_neon.rpm")

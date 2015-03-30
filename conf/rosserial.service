@@ -1,16 +1,14 @@
+# https://github.com/bmwcarit/meta-ros/blob/f7ec055f63f21a50f435aa62f554d136a2c5d920/recipes-ros/ros-comm/roslaunch/roscore.service
+
 [Unit]
-Description=ROS node for communication between Gumstix and Arduino
+Description=Launcher for the ROS master, parameter server and rosout logging node
 After=network.target
 
 [Service]
-Type=forking
-# The PID file is optional, but recommended in the manpage
-# "so that systemd can identify the main process of the daemon"
-PIDFile=/var/run/rosserial.pid
 EnvironmentFile=/etc/default/roscore
-ExecStartPre=/bin/touch /usr/.catkin
-ExecStart=/usr/bin/rosrun rosserial_python serial_node.py _port:=/dev/ttyO0 _baud:=57600
-Restart=always
+ExecStartPre=/bin/touch ${CMAKE_PREFIX_PATH}/.catkin
+ExecStart=/opt/ros/hydro/bin/rosrun rosserial_python serial_node.py _port:=/dev/ttyO0 _baud:=57600
+Restart=on-abort
 
 [Install]
 WantedBy=multi-user.target

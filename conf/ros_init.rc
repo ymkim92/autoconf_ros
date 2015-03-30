@@ -1,0 +1,9 @@
+export ROS_ROOT=/opt/ros/hydro/
+export ROS_PORT=11311
+export ROS_MASTER_URI=http://localhost:11311
+export CMAKE_PREFIX_PATH=/opt/ros/hydro/
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/ros/hydro/bin
+export LD_LIBRARY_PATH=/opt/ros/hydro/lib
+export PYTHONPATH=/opt/ros/hydro/lib/python2.7/site-packages
+touch /usr/.catkin
+
