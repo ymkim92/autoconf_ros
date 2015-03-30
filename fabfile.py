@@ -26,9 +26,9 @@ def cp_overo_roscore():
     # after devel
 
     roscore_file_name = 'conf/roscore'
-    #call(['scp', roscore_file_name, 'root@overo:/etc/default/roscore']) 
-    #call(['scp', 'conf/ros_init.rc', 'root@overo:~']) 
-    #call(['scp', 'conf/run_serial.sh', 'root@overo:~']) 
+    call(['scp', roscore_file_name, 'root@overo:/etc/default/roscore']) 
+    call(['scp', 'conf/ros_init.rc', 'root@overo:~']) 
+    call(['scp', 'conf/run_serial.sh', 'root@overo:~']) 
     call(['scp', 'conf/ublox_gps.launch',
           'root@overo:/opt/ros/hydro/lib/ublox_gps']) 
 
